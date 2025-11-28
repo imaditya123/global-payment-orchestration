@@ -1,0 +1,31 @@
+server:
+    port: 8080
+
+
+spring:
+    application:
+        name: api-gateway
+
+
+services:
+    orchestrator:
+        base-url: http://localhost:8081
+    audit:
+        base-url: http://localhost:8086
+    fx:
+        base-url: http://localhost:8082
+    settlement:
+        base-url: http://localhost:8085
+
+
+logging:
+    level:
+        root: INFO
+        com.global.apigateway: DEBUG
+
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info

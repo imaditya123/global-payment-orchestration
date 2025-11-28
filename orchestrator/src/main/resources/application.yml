@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: orchestrator-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orchestrator
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+kafka:
+  bootstrap-servers: localhost:9092
+
+orchestration:
+  retry:
+    max-attempts: 5
+    backoff-ms: 2000
+
+services:
+  fx:
+    base-url: http://localhost:8082
+  processor:
+    base-url: http://localhost:8083
+  audit:
+    base-url: http://localhost:8086
+
