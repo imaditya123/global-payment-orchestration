@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: settlement-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/settlement
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+kafka:
+  bootstrap-servers: localhost:9092
+
+settlement:
+  windows:
+    - "09:00"
+    - "12:00"
+    - "15:00"
+    - "18:00"
+  cutoff-offset-minutes: 10
+  max-batch-items: 1000
+  dispatch:
+    retry:
+      max-attempts: 5
+      backoff-ms: 5000
+
+psp:
+  connectors:
+    example-psp:
+      type: http
+      base-url: https://psp.example.com/settle
+      auth-token: ${PSP_EXAMPLE_TOKEN:}
