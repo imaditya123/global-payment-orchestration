@@ -13,6 +13,8 @@ spring:
 
 kafka:
   bootstrap-servers: localhost:9092
+  topics:
+    events: payments.events
 
 orchestration:
   retry:
@@ -27,3 +29,7 @@ services:
   audit:
     base-url: http://localhost:8086
 
+logging:
+  level:
+    root: INFO
+    com.global.orchestrator: DEBUG

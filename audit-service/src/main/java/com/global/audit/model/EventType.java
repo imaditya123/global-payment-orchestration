@@ -1,0 +1,16 @@
+package com.global.audit.model;
+
+
+public enum EventType {
+    PAYMENT_CREATED,
+    FUNDS_RESERVED,
+    FX_CONVERTED,
+    PAYMENT_SENT,
+    PAYMENT_FAILED,
+    COMPENSATION_TRIGGERED,
+    SETTLEMENT_CONFIRMED,
+    RETRY_ATTEMPT,
+    VALIDATION_FAILED,
+    EXTERNAL_PSP_FAILURE,
+    UNKNOWN
+}
