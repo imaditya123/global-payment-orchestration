@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: payment-processor
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_processor
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+
+# Flyway: automatically run migrations on startup
+flyway:
+  enabled: true
+  baseline-on-migrate: true
+  locations: classpath:db/migration
+
+# Kafka (simple defaults for local dev)
+kafka:
+  bootstrap-servers: localhost:9092
+spring:
+  kafka:
+    bootstrap-servers: ${kafka.bootstrap-servers}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+
+# Management / Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,env,loggers
+  endpoint:
+    health:
+      show-details: always
+
+# Processor-specific settings (failure injection)
+processor:
+  failure-injection:
+    mode: none       # none | latency | intermittent | permanent
+    latency-ms: 0
+    error-rate: 0.0  # 0..1
+
+# Logging: include correlation id if propagated via MDC (X-Correlation-Id)
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n"
+
+# Security placeholders (for infra to override)
+security:
+  api-key: changeme
+
+# Profiles - override in application-local.yml or Docker/K8s secrets for production
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_processor
+    username: postgres
+    password: postgres
